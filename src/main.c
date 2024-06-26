@@ -2,12 +2,11 @@
 #include <string.h>
 #include <stdbool.h>
 
-
 #define CROSS 1
 #define CIRCLE 2
 
 int gameTable[3][3];
-int token = CIRCLE;
+int token = CIRCLE; // TODO: Use struct for token, saving the token shape and their position
 
 int
 main(){
@@ -15,11 +14,10 @@ main(){
 	extern int gameTable[3][3] ;
 
 	initTable(gameTable);
-
 	printf("Enter movement, O starts first.\n0 to exit. \n ");
 	while(!exit){
 
-		if(getUserInput() == 1){
+		if(processTable() == 1){
 			exit = true;
 		}else{
 
@@ -32,21 +30,70 @@ main(){
 }
 
 int
-getUserInput(){
+processTable(){
 	extern int gameTable[3][3];
-	int row = 0, col = 0;
 	extern int token;
+	
+	int row = -1, col = -1;
 
-	printf("Select the position: "); scanf("%d %d",&row,&col);
-	printf("\n");
+	printf("Select the position (%s).\n ",(token == CIRCLE ? "O" : "X")); 
+
+	getUserInput(&row,&col);
 	gameTable[row][col] = token ;
+	
+	if(checkWin(token,row,col) == 1){
+		return 1;
+	}
 	if(token == CIRCLE ){
 		token = CROSS;
 	}else{
 		token = CIRCLE;
 	}
-	return row == 0;
+
+	return row == -1 || col == -1;
 }
+
+int checkWin(int token,int row, int col){
+ 	return checkHorizontalWin(token,row) == 1 || checkVerticalWin(token,col) == 1;
+}
+
+int checkHorizontalWin(int token,int row){
+	extern int gameTable[3][3];
+	int tFound = 0;
+	for(int col = 0; col < 3; col++){
+		if(gameTable[row][col] == token){
+			tFound++;
+		}
+
+	}
+	return tFound == 3;
+}
+
+int checkVerticalWin(int token,int col){
+	return false;
+}
+
+
+void
+getUserInput(int* row, int* col){
+	*row = getInt(*row,"Enter row position: ") - 1;
+	*col = getInt(*col,"Enter col position: ") - 1;
+
+  
+}
+
+int
+getInt(int uInt,char* msg){
+	while(uInt < 0 || uInt > 3) {
+  		printf("%s ",msg); scanf("%d",&uInt);
+
+  	}
+
+	return uInt;
+
+
+}
+
 
 void
 showTable(){
