@@ -3,6 +3,6 @@ SRC=src/*.c
 NAME=tictactoe
 
 build:
-	$(CC) $(SRC) -o $(NAME)
+	$(CC) $(SRC) -g3 -o  $(NAME)
 
 
