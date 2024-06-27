@@ -69,11 +69,13 @@ processTable(){
 	return row == -1 || col == -1;
 }
 
-int checkWin(int token,int row, int col){
- 	return checkHorizontalWin(token,row) == 1 || checkVerticalWin(token,col) == 1;
+int 
+checkWin(int token,int row, int col){
+ 	return checkHorizontalWin(token,row) == 1 || checkVerticalWin(token,col) == 1 || checkDiagonalWin(token) == 1;
 }
 
-int checkHorizontalWin(int token,int row){
+int 
+checkHorizontalWin(int token,int row){
 	extern int gameTable[3][3];
 	int tFound = 0;
 	for(int col = 0; col < 3; col++){
