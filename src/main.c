@@ -36,14 +36,30 @@ processTable(){
 	
 	int row = -1, col = -1;
 
-	printf("Select the position (%s).\n ",(token == CIRCLE ? "O" : "X")); 
 
-	getUserInput(&row,&col);
-	gameTable[row][col] = token ;
+	printf("Select the position (%s).\n ",(token == CIRCLE ? "O" : "X")); 
+	
+	while(1){
+	
+		getUserInput(&row,&col);
+		if(gameTable[row][col] != 0){
+			printf("The selected position is already used, please pick other.\n");
+			row = -1;
+			col = -1;
+		}else{
+			gameTable[row][col] = token ;
+			break;
+		}
+
+
+	}
 	
 	if(checkWin(token,row,col) == 1){
+		showTable();
+		printf("Player %s has won!\n",(token == CIRCLE ? "O" : "X"));
 		return 1;
 	}
+
 	if(token == CIRCLE ){
 		token = CROSS;
 	}else{
@@ -69,9 +85,44 @@ int checkHorizontalWin(int token,int row){
 	return tFound == 3;
 }
 
-int checkVerticalWin(int token,int col){
-	return false;
+int 
+checkVerticalWin(int token,int col){
+	
+	extern int gameTable[3][3];
+	
+	int tFound = 0;
+	for(int row  = 0; row  < 3; row++){
+		if(gameTable[row][col] == token){
+			tFound++;
+		}
+
+	}
+	return tFound == 3;
 }
+
+int
+checkDiagonalWin(int token){
+	extern gameTable[3][3];
+	// TODO: use loops for this lmao
+
+	if(gameTable[1][1] != token){
+		return 0;
+	}else{
+		if(gameTable[0][2] == token && gameTable[2][0] == token){
+			return 1;
+		}else if(gameTable[0][0] == token && gameTable[2][2] == token){
+				return 1;
+		}
+				
+			
+	}
+	
+	return 0;
+	
+
+
+}
+
 
 
 void
