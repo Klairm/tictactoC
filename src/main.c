@@ -11,7 +11,8 @@ int token = CIRCLE; // TODO: Use struct for token, saving the token shape and th
 int
 main(){
 	bool exit = false;
-	extern int gameTable[3][3] ;
+
+
 
 	initTable(gameTable);
 	printf("Enter movement, O starts first.\n0 to exit. \n ");
@@ -31,8 +32,6 @@ main(){
 
 int
 processTable(){
-	extern int gameTable[3][3];
-	extern int token;
 	
 	int row = -1, col = -1;
 
@@ -76,7 +75,6 @@ checkWin(int token,int row, int col){
 
 int 
 checkHorizontalWin(int token,int row){
-	extern int gameTable[3][3];
 	int tFound = 0;
 	for(int col = 0; col < 3; col++){
 		if(gameTable[row][col] == token){
@@ -90,7 +88,6 @@ checkHorizontalWin(int token,int row){
 int 
 checkVerticalWin(int token,int col){
 	
-	extern int gameTable[3][3];
 	
 	int tFound = 0;
 	for(int row  = 0; row  < 3; row++){
@@ -104,7 +101,6 @@ checkVerticalWin(int token,int col){
 
 int
 checkDiagonalWin(int token){
-	extern gameTable[3][3];
 	// TODO: use loops for this lmao
 
 	if(gameTable[1][1] != token){
@@ -150,7 +146,6 @@ getInt(int uInt,char* msg){
 
 void
 showTable(){
-	extern int gameTable[3][3];
 
 	for(int row = 0; row < 3; row++){
 		for(int column = 0; column < 3; column++){
